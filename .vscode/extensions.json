@@ -1,0 +1,28 @@
+{
+  // VS Code sugiere instalar estas extensiones al abrir la carpeta.
+  // Para instalarlas todas de golpe: npm run setup:vscode
+  "recommendations": [
+    // Expo / React Native / JavaScript
+    "expo.vscode-expo-tools",
+    "msjsdiag.vscode-react-native",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "dsznajder.es7-react-js-snippets",
+    "eamodio.gitlens",
+    "anthropic.claude-code",
+
+    // Markdown y documentación
+    "davidanson.vscode-markdownlint",
+    "docsmsft.docs-markdown",
+    "docsmsft.docs-preview",
+    "docsmsft.docs-authoring-pack",
+    "docsmsft.docs-article-templates",
+    "docsmsft.docs-images",
+    "docsmsft.docs-scaffolding",
+    "docsmsft.docs-yaml",
+    "george-alisson.html-preview-vscode",
+    "cweijan.vscode-office",
+    "tomoki1207.pdf"
+  ],
+  "unwantedRecommendations": []
+}
