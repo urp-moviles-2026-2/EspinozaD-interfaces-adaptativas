@@ -1,4 +1,10 @@
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
 import Section from "../components/Section";
 import Badge from "../components/Badge";
 import { colors, spacing, radius } from "../theme";
@@ -10,25 +16,36 @@ const CARDS = [
 ];
 
 export default function OrientationScreen() {
-  // TODO (Ejercicio 03, paso 1): obtén width y height con useWindowDimensions y calcula
-  // isPortrait = height >= width (opción 1 de la slide 13: sin librerías, siempre actualizado).
-  const isPortrait = true;
+  // Paso 1: el hook va dentro del componente
+  const { width, height } = useWindowDimensions();
+  const isPortrait = height >= width;
   const isLandscape = !isPortrait;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Section title="Detectar la orientación">
-        <Badge tone={isLandscape ? "info" : "primary"}>{isLandscape ? "LANDSCAPE · flexDirection: row" : "PORTRAIT · flexDirection: column"}</Badge>
+        <Badge tone={isLandscape ? "info" : "primary"}>
+          {isLandscape
+            ? "LANDSCAPE · flexDirection: row"
+            : "PORTRAIT · flexDirection: column"}
+        </Badge>
         <Text style={styles.note}>
-          const isPortrait = height {">="} width. Para bloquear o forzar la orientación se usa expo-screen-orientation o "orientation" en app.json.
+          const isPortrait = height {">="} width. Para bloquear o forzar la
+          orientación se usa expo-screen-orientation o "orientation" en
+          app.json.
         </Text>
       </Section>
 
-      {/* TODO (Ejercicio 03, paso 2): en landscape las tarjetas van en fila (flexDirection: "row") y cada una con flex: 1;
-          en portrait, apiladas en columna (slide 14). */}
-      <View style={{ flexDirection: "column", gap: spacing.md }}>
+      {/* Paso 2: fila en landscape, columna en portrait */}
+      <View
+        style={{
+          flexDirection: isLandscape ? "row" : "column",
+          gap: spacing.md,
+        }}
+      >
         {CARDS.map((card) => (
-          <View key={card.id} style={styles.card}>
+          // Paso 3: flex: 1 solo en landscape para repartir el ancho en tres partes iguales
+          <View key={card.id} style={[styles.card, isLandscape && { flex: 1 }]}>
             <Text style={styles.cardTitle}>{card.title}</Text>
             <Text style={styles.cardBody}>{card.body}</Text>
           </View>
