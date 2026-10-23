@@ -6,21 +6,44 @@ export const BREAKPOINTS = {
 };
 
 export const DEVICE_CLASSES = [
-  { key: "phone-portrait", label: "Phone Portrait", range: "< 600 dp", example: "iPhone SE, 13, 15" },
-  { key: "phone-landscape", label: "Phone Landscape", range: "600 - 768 dp", example: "Phones rotados, mini tablets" },
-  { key: "tablet-portrait", label: "Tablet Portrait", range: "768 - 1024 dp", example: "iPad Mini, iPad estándar" },
-  { key: "tablet-landscape", label: "Tablet Landscape", range: "≥ 1024 dp", example: "iPad Pro, foldables abiertos" },
+  {
+    key: "phone-portrait",
+    label: "Phone Portrait",
+    range: "< 600 dp",
+    example: "iPhone SE, 13, 15",
+  },
+  {
+    key: "phone-landscape",
+    label: "Phone Landscape",
+    range: "600 - 768 dp",
+    example: "Phones rotados, mini tablets",
+  },
+  {
+    key: "tablet-portrait",
+    label: "Tablet Portrait",
+    range: "768 - 1024 dp",
+    example: "iPad Mini, iPad estándar",
+  },
+  {
+    key: "tablet-landscape",
+    label: "Tablet Landscape",
+    range: "≥ 1024 dp",
+    example: "iPad Pro, foldables abiertos",
+  },
 ];
 
 /** Devuelve la clase de dispositivo a partir del ancho de ventana en dp. */
 export function getDeviceClass(width) {
-  // TODO (Ejercicio 04): devolver "phone-portrait", "phone-landscape", "tablet-portrait" o
-  // "tablet-landscape" comparando width con los valores de BREAKPOINTS.
-  return "phone-portrait";
+  if (width < BREAKPOINTS.phoneLandscape) return "phone-portrait";
+  if (width < BREAKPOINTS.tabletPortrait) return "phone-landscape";
+  if (width < BREAKPOINTS.tabletLandscape) return "tablet-portrait";
+  return "tablet-landscape";
 }
 
 /** Número de columnas de la galería según el ancho de ventana (slide 19). */
 export function getColumns(width) {
-  // TODO (Ejercicio 04): 2 columnas por debajo de 600 dp, 3 por debajo de 768, 4 por debajo de 1024 y 6 en adelante.
-  return 2;
+  if (width < BREAKPOINTS.phoneLandscape) return 2;
+  if (width < BREAKPOINTS.tabletPortrait) return 3;
+  if (width < BREAKPOINTS.tabletLandscape) return 4;
+  return 6;
 }
