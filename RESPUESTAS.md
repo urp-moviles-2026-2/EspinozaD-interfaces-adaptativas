@@ -1,4 +1,3 @@
-cat > RESPUESTAS.md << 'EOF'
 # Sistemas Móviles y Plataformas Menores
 
 # Guía - Interfaces Adaptativas con Dimensions API y useWindowDimensions
