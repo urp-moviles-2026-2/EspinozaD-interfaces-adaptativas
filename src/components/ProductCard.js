@@ -13,18 +13,28 @@ const COMPACT_BELOW = 240; // dp: por debajo de este ancho la tarjeta pasa a mod
 export default function ProductCard({ product, style }) {
   const [cardWidth, setCardWidth] = useState(0);
 
-  // TODO (Ejercicio 06, paso 2): compact es true cuando ya se midió (cardWidth > 0) y mide menos de COMPACT_BELOW.
-  const compact = false;
+  // Paso 2: compact solo es true cuando ya se midió y el ancho es menor al umbral
+  const compact = cardWidth > 0 && cardWidth < COMPACT_BELOW;
 
   return (
-    // TODO (Ejercicio 06, paso 1): agrega onLayout a esta View y guarda e.nativeEvent.layout.width con setCardWidth.
-    <View style={[styles.card, style]}>
-      {/* TODO (Ejercicio 06, paso 3): altura de imagen 80 en modo compacto, 140 en modo completo */}
-      <Image source={{ uri: product.uri }} style={[styles.image, { height: 140 }]} />
+    // Paso 1: onLayout mide el ancho real de la tarjeta
+    <View
+      style={[styles.card, style]}
+      onLayout={(e) => setCardWidth(e.nativeEvent.layout.width)}
+    >
+      {/* Paso 3: 80 dp de alto en compacto, 140 en completo */}
+      <Image
+        source={{ uri: product.uri }}
+        style={[styles.image, { height: compact ? 80 : 140 }]}
+      />
       <View style={styles.body}>
-        <Text style={styles.name} numberOfLines={1}>{product.name}</Text>
-        {/* TODO (Ejercicio 06, paso 3): ocultar la descripción en modo compacto */}
-        <Text style={styles.description}>{product.description}</Text>
+        <Text style={styles.name} numberOfLines={1}>
+          {product.name}
+        </Text>
+        {/* Paso 3: la descripción solo se muestra en modo completo */}
+        {!compact && (
+          <Text style={styles.description}>{product.description}</Text>
+        )}
         <View style={styles.footer}>
           <Text style={styles.price}>S/ {product.price}</Text>
           <Badge tone={compact ? "warn" : "primary"}>
@@ -48,6 +58,11 @@ const styles = StyleSheet.create({
   body: { padding: spacing.md, gap: spacing.xs },
   name: { fontSize: 15, fontWeight: "700", color: colors.text },
   description: { fontSize: 13, color: colors.muted, lineHeight: 18 },
-  footer: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: spacing.xs },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: spacing.xs,
+  },
   price: { fontSize: 15, fontWeight: "800", color: colors.primary },
 });
